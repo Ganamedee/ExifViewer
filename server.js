@@ -5,8 +5,10 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() }); // Changed to memory storage for serverless
+const upload = multer({ storage: multer.memoryStorage() });
 
+// Update views directory configuration
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
