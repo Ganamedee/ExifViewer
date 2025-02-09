@@ -5,13 +5,10 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage: multer.memoryStorage() }); // Changed to memory storage for serverless
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-// Rest of your server code...
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -19,14 +16,12 @@ app.get("/", (req, res) => {
 
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
-    const buffer = fs.readFileSync(req.file.path);
+    const buffer = req.file.buffer; // Use buffer directly instead of file system
     const tags = await ExifReader.load(buffer);
 
-    // Clean up the tags object for better display
     const cleanedTags = {};
     for (let [key, value] of Object.entries(tags)) {
       if (key !== "MakerNote") {
-        // Skip MakerNote as it's usually not useful
         cleanedTags[key] = value;
       }
     }
@@ -34,11 +29,13 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     res.json({
       metadata: cleanedTags,
       filename: req.file.originalname,
-      filepath: req.file.path,
     });
   } catch (error) {
     res.status(500).json({ error: "Error processing image metadata" });
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
+
+module.exports = app; // Export for Vercel
