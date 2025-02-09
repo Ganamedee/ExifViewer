@@ -1,0 +1,22 @@
+{
+  "name": "exifviewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "aos": "^2.3.4",
+    "ejs": "^3.1.10",
+    "exifreader": "^4.26.1",
+    "express": "^4.21.2",
+    "gsap": "^3.12.7",
+    "multer": "^1.4.5-lts.1"
+  }
+}

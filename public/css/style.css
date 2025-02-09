@@ -1,0 +1,246 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --neon-blue: #00f7ff;
+  --hover-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  color: white;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.drop-zone {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  transition: var(--hover-transition);
+  cursor: pointer;
+}
+
+.drop-zone:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+  transform: scale(1.02);
+}
+
+.preview-image {
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 200px;
+  max-height: 200px;
+  margin-bottom: 10px;
+  transition: var(--hover-transition);
+}
+
+.metadata-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-top: 40px;
+}
+
+@media (max-width: 992px) {
+  .metadata-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .metadata-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metadata-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--glass-border);
+  padding: 25px;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.05s ease;
+  will-change: transform, box-shadow;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) translateZ(0);
+  backface-visibility: hidden;
+  /* Removed the initial cardFloat animation since fade-scroll will handle it */
+}
+
+.metadata-card:hover {
+  border-color: var(--neon-blue);
+  box-shadow: 0 10px 30px rgba(0, 247, 255, 0.25);
+}
+
+.metadata-card h3 {
+  color: var(--neon-blue);
+  margin-bottom: 15px;
+}
+
+.metadata-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.metadata-card li {
+  margin: 10px 0;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.analyze-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--hover-transition);
+}
+
+.analyze-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.remove-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 20px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  border-radius: 30px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--hover-transition);
+}
+
+.remove-btn:hover {
+  background: rgba(255, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.search-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 24px;
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  border-radius: 30px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  transition: var(--hover-transition);
+  backdrop-filter: blur(10px);
+  margin-bottom: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+  transform: scale(1.02);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.error-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: white;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--neon-blue);
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.js-tilt-glare-inner {
+  border-radius: 15px;
+  opacity: 0.3;
+}
+
+/* New styles for fade in/out on scroll */
+.fade-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
