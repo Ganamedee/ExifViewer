@@ -1,16 +1,18 @@
 const express = require("express");
 const multer = require("multer");
 const ExifReader = require("exifreader");
-const fs = require("fs");
 const path = require("path");
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Update views directory configuration
+// Set correct static file serving
+app.use("/js", express.static(path.join(__dirname, "public/js")));
+app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("index");
