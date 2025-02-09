@@ -5,10 +5,13 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const upload = multer({ dest: "public/uploads/" });
+const upload = multer({ dest: "uploads/" });
 
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Rest of your server code...
 
 app.get("/", (req, res) => {
   res.render("index");
